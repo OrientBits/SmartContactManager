@@ -1,4 +1,27 @@
 body{
     background: #e2e2e2;
+}
 
+.bg-primary{
+    background: #03A4FF;
+}
+
+.banner{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url("../img/contact.png");
+    background-size: cover;
+    color: white;
+}
+
+.my-card{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.03);
+    border-radius: 10px;
+    elevation: above;
+    padding: 50px 70px;
+    background: white;
+
+}
+.alert-design{
+    padding: 30px;
 }
