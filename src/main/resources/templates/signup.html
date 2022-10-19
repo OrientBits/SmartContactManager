@@ -16,8 +16,8 @@
                 <div class="card my-card mt-5">
 
 
-                    <div th:if="${session.message}" class="alert" th:class="${session.message.type}" role="alert">
-                        <p th:text="${session.message.content}"></p>
+                    <div th:if="${session.message}" class="alert p-5" th:class="${session.message.type}" role="alert">
+                        <p class="text-center" th:text="${session.message.content}"></p>
                     </div>
 
                     <div class="container text-center">
