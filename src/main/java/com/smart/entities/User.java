@@ -1,6 +1,7 @@
 package com.smart.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotBlank(message = "Name can not be empty!")
+    @Size(min = 3, max = 20, message = "User name must be at least 3 characters!")
     private String name;
     @Column(unique = true)
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "InValid email")
     private String email;
     private String password;
     private String role;
