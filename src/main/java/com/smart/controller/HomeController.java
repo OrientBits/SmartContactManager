@@ -5,6 +5,7 @@ import com.smart.entities.User;
 import com.smart.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,9 @@ import javax.validation.Valid;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -67,6 +71,7 @@ public class HomeController {
             user.setRole("ROLE_USER");
             user.setEnabled(true);
             user.setImageUrl("default.png");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             System.out.println("Agreement: " + agreement);
             System.out.println("User: " + user);
