@@ -90,9 +90,19 @@ public class HomeController {
             session.setAttribute("message", new Message("Failed to Register! " + e.getMessage(), "alert-danger"));
             return "signup";
         }
+    }
 
+
+    // handler for custom login
+    @GetMapping("/signin")
+    public String customLogin(Model model){
+
+        model.addAttribute("title", "Login - Smart Contact Manager");
+
+        return "login";
 
     }
+
 
 
 }

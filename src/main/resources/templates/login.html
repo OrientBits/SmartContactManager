@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+</head>
+<body>
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card my-card mt-5">
+
+                   <div th:if="${param.error}" class="alert alert-danger">Invalid username and password</div>
+                   <div th:if="${param.logout}" class="alert alert-success">you have been logged out</div>
+
+                    <div class="container text-center">
+                        <img class="" src="" th:src="@{/img/verify.png}" height="100px" alt="SignUp Img">
+                    </div>
+
+                    <h1 class="text-center">Login Here!!</h1>
+
+                    <form id="login-form" class="form" th:action="@{/signin}" method="post">
+                        <!--email field-->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Email</label>
+                            <input name="username" type="username" class="form-control"
+                                   id="username" placeholder="Enter here" required>
+                        </div>
+
+                        <!--password field-->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" placeholder="Enter here"
+                                   required>
+                        </div>
+
+                        <div class="container text-end">
+                            <label class="form-label text-end">New User? <a href="" th:href="@{/signup}"> Register</a></label>
+                        </div>
+
+
+                        <!--buttons-->
+                        <div class="container text-center mt-2">
+                            <button type="submit" class="btn btn-primary text-white mx-2 px-5">
+                                Submit
+                            </button>
+
+                            <button type="reset" class="btn btn-warning mx-2 px-5">
+                                Reset
+                            </button>
+                        </div>
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

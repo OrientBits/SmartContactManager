@@ -36,18 +36,14 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
     /// configure method...
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("Configure method1");
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        System.out.println("Configure method2");
-
         http.authorizeHttpRequests().antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/**").permitAll().and().formLogin()
+                .antMatchers("/**").permitAll().and().formLogin().loginPage("/signin")
                 .and().csrf().disable();
     }
 
