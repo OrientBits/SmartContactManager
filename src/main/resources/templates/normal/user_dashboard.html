@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base::layout(~{::section})">
 <head>
     <meta charset="UTF-8">
     <title>home</title>
@@ -12,8 +14,16 @@
             start Collecting your contacts in very smarter way. We provide
             very efficient and smarter way of handling contacts.
         </p>
+
+        <h1> User Name: <span th:text="${user.name}"></span></h1>
+        <h1> User Email: <span th:text="${user.email}"></span></h1>
+
+        <h2> <a href="" th:href="@{/logout}"> Logout</a> </h2>
+
+
         <button class="btn btn-primary btn-lg">Get Started</button>
     </div>
+
 </section>
 </body>
 </html>

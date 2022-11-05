@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:fragment="layout(content)">
+      th:fragment="layout(content)" >
 
 <head>
   <!-- Required meta tags -->
@@ -36,11 +36,11 @@
           <a class="nav-link" href="#">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/user/index">Login</a>
+          <a class="nav-link" href="#"><span th:text="${user.name}"> </span></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="" th:href="@{/signup}">Signup</a>
+          <a class="nav-link" href="" th:href="@{/logout}">Logout</a>
         </li>
 
       </ul>
