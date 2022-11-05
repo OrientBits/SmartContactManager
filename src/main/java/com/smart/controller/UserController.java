@@ -12,7 +12,6 @@ public class UserController {
 
     @RequestMapping("index")
     public String dashboard(Model model, Principal principal){
-
         return "normal/user_dashboard";
 
     }
