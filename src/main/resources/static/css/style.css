@@ -1,35 +1,36 @@
-body{
+body {
     background: #e2e2e2;
 }
 
-.bg-primary{
+.bg-primary {
     background: #03A4FF;
 }
 
-.banner{
+.banner {
     width: 100%;
     height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url("../img/contact.png");
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/contact.png");
     background-size: cover;
     color: white;
 }
 
-.my-card{
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.03);
+.my-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.03);
     border-radius: 10px;
     elevation: above;
     padding: 50px 70px;
     background: white;
 
 }
-.alert-design{
+
+.alert-design {
     padding: 30px;
 }
 
 /*side bar style*/
 
 @media only screen and (max-width: 600px) {
-    .sidebar{
+    .sidebar {
         display: none;
         width: 80%;
         background: white;
@@ -37,21 +38,84 @@ body{
         position: fixed;
         padding-top: 20px;
     }
-    .content{
+
+    .content {
         margin-left: 0% !important;
     }
 
 }
 
-.sidebar{
+.main {
+    transition: 0.25s ease-in-out all;
+}
+
+.main .sidebar {
+    transform: translateX(0rem);
     width: 18%;
     background: white;
     height: 100%;
     position: fixed;
     padding-top: 45px;
+    transition: 0.25s ease-in-out all;
 }
 
-.sidebar a{
+.main.active .sidebar {
+    transform: translateX(-22rem);
+    transition: 0.25s ease-in-out all;
+}
+
+
+/* coding by Ram */
+.main .navigation {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    transition: 0.25s ease-in-out all;
+    top: 20px;
+}
+
+.main .navigation::before {
+    content: "";
+    position: absolute;
+    width: 32px;
+    background: #000;
+    height: 2px; 
+    transition: 0.25s ease-in-out all;
+    transform: rotate(45deg);
+}
+
+.main .navigation::after {
+    content: "";
+    position: absolute;
+    width: 32px;
+    background: #000;
+    transform: translateY(21px);
+    height: 2px;
+    transform: rotate(-45deg);
+    transition: 0.25s ease-in-out all;
+
+}
+
+
+.main.active .navigation::before {
+    box-shadow: 0px 10px #000;
+    transform: rotate(0deg);
+    background: #000;
+    
+}
+
+.main.active .navigation::after {
+    background-color: #000;
+    transform: rotate(0deg);
+    transform: translateY(21px);
+
+}
+
+
+
+
+.sidebar a {
     display: block;
     width: 100%;
     padding: 10px 25px;
@@ -59,18 +123,18 @@ body{
     color: gray;
 }
 
-.sidebar a:hover{
+.sidebar a:hover {
     background: #e2e2e2;
 }
 
-.sidebar .divider{
+.sidebar .divider {
     height: 0.5px;
     width: 100%;
     background: #e2e2e2;
     margin-top: 10px;
 }
 
-.sidebar .cross-btn{
+.sidebar .cross-btn {
     position: absolute;
     top: 0px;
     right: 35px;
@@ -80,7 +144,10 @@ body{
 
 
 
-
-.content{
+.main .content {
     margin-left: 20%;
+}
+
+.main.active .content {
+    margin-left: 1%;
 }
