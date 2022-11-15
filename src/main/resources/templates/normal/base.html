@@ -40,7 +40,7 @@
             <ul class="navbar-nav ml-auto text-uppercase">
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="" th:href="@{/}">Home</a>
+                    <a class="nav-link active" aria-current="page" href="" th:href="@{/user/index}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
@@ -63,12 +63,12 @@
 
     <!--sidebar-->
     <div class="sidebar" id="sidebar">
-        <a href="#" class="item"> <i class="fa-solid fa-house"></i> Home</a>
+        <a href="#" th:href="@{/user/index}" class="item"> <i class="fa-solid fa-house"></i> Home</a>
         <a href="#" class="item"> <i class="fa-solid fa-address-book"></i> View Contacts</a>
         <a href="" th:href="@{/user/add-contact}" class="item"> <i class="fa-solid fa-plus"></i> Add Contact</a>
         <a href="#" class="item"> <i class="fa-solid fa-user"></i> Your Profile</a>
         <a href="#" class="item"> <i class="fa-solid fa-gear"></i> Settings</a>
-        <a href="#" class="item"> <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        <a href="#" class="item" th:href="@{/logout}"> <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         <div class="divider"></div>
     </div>
     <!--end of sidebar-->
