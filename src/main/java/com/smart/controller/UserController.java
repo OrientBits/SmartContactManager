@@ -1,16 +1,13 @@
 package com.smart.controller;
 
 import com.smart.dao.UserRepository;
-import com.smart.entities.Contact;
 import com.smart.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.security.Principal;
 
 @Controller
@@ -32,7 +29,6 @@ public class UserController {
         model.addAttribute("user",user);
 
         return "normal/user_dashboard";
-
     }
 
     //open add form handler
