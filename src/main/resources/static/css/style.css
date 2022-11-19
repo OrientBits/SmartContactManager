@@ -49,6 +49,7 @@ body {
     transition: 0.25s ease-in-out all;
 }
 
+
 .main .sidebar {
     transform: translateX(0rem);
     width: 18%;
@@ -68,8 +69,8 @@ body {
 /* coding by Ram */
 .main .navigation {
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     position: relative;
     transition: 0.25s ease-in-out all;
     top: 20px;
@@ -78,7 +79,7 @@ body {
 .main .navigation::before {
     content: "";
     position: absolute;
-    width: 32px;
+    width: 28px;
     background: #000;
     height: 2px; 
     transition: 0.25s ease-in-out all;
@@ -88,7 +89,7 @@ body {
 .main .navigation::after {
     content: "";
     position: absolute;
-    width: 32px;
+    width: 28px;
     background: #000;
     transform: translateY(21px);
     height: 2px;

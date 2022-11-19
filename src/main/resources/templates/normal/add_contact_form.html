@@ -10,7 +10,94 @@
 <body>
 
 <section>
-    <h1 class="font-weight-bold">Welcome to Add form </h1>
+
+    <div class="card m-3">
+        <div class="card-body">
+            <h1 class="text-center">Add Contact</h1>
+
+            <div class="container-fluid mt-1">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <form action="#"
+                              th:object="${contact}"
+                              enctype="multipart/form-data"
+                              method="post"
+                              th:action="@{/user/process-contact}"
+                              class="mt-2"
+                        >
+
+                            <!--first name-->
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
+                                <input type="text" id="firstName" class="form-control"
+                                       name="name" placeholder="Enter Name here">
+                            </div>
+
+
+                            <!--second name-->
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <input type="text" id="secondName" class="form-control"
+                                       name="secondName" placeholder="Enter Nick Name here">
+                            </div>
+
+                            <!-- phone filed-->
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <input type="number" id="phone" class="form-control"
+                                       name="phone" placeholder="Enter Phone no here">
+                            </div>
+
+                            <!-- email filed-->
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <input type="email" id="email" class="form-control"
+                                       name="email" placeholder="Enter Email here">
+                            </div>
+
+                            <!--world filed-->
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                </div>
+                                <input type="text" id="work" class="form-control"
+                                       name="word" placeholder="Enter You work here">
+                            </div>
+
+                            <!-- contact description-->
+
+                            <div class="input-group mb-3">
+                                <textarea id="description" rows="10" class="form-control"
+                                          name="description" placeholder="Enter your description"></textarea>
+                            </div>
+
+                            <!-- contact image-->
+                            <div class="mb-3">
+                                <input class="form-control" type="file" id="profileIMage">
+                            </div>
+
+                            <div class="container text-center">
+                                <button class="btn btn-outline-primary">Save Contact</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </section>
 
 </body>
