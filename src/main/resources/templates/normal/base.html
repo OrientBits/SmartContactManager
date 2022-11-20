@@ -32,7 +32,7 @@
 <!--<script src="../../static/js/script.js"></script>-->
 
 <!--this is nav bar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><h5>Smart Contact Manager</h5></a>
 
@@ -62,7 +62,7 @@
 <div class="main" id="main">
 
     <!--sidebar-->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar mt-2" id="sidebar">
         <a href="#" th:href="@{/user/index}" class="item"> <i class="fa-solid fa-house"></i> Home</a>
         <a href="#" class="item"> <i class="fa-solid fa-address-book"></i> View Contacts</a>
         <a href="" th:href="@{/user/add-contact}" class="item"> <i class="fa-solid fa-plus"></i> Add Contact</a>
@@ -75,9 +75,13 @@
 
 
     <!--content area-->
-    <div class="content">
+    <div class="content mt-5">
         <div onclick="toggleSidebar()" class="navigation"></div>
-      
+
+        <div th:if="${session.message}" class="alert p-5" th:class="${session.message.type}" role="alert">
+            <p class="text-center p-2" th:text="${session.message.content}"></p>
+            <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+        </div>
 
         <div th:replace="${content}">
         </div>

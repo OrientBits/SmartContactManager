@@ -1,15 +1,19 @@
 package com.smart.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
+    @Size(min = 3, max = 20, message = "User name must be at least 3 characters!")
     private String name;
     private String secondName;
     private String work;
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "InValid email")
     private String email;
     private String phone;
     private String imageUrl;
@@ -91,4 +95,20 @@ public class Contact {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "Id=" + Id +
+                ", name='" + name + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", work='" + work + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
 }

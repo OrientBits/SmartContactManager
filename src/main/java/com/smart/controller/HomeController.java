@@ -52,7 +52,9 @@ public class HomeController {
 
 
     @PostMapping("/do_register")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, @RequestParam(value = "agreement", defaultValue = "false") Boolean agreement, Model model, HttpSession session) {
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
+                               @RequestParam(value = "agreement", defaultValue = "false") Boolean agreement,
+                               Model model, HttpSession session) {
 
         try {
 
@@ -64,8 +66,7 @@ public class HomeController {
             if (bindingResult.hasErrors()) {
                 System.out.println("Errors: "+ bindingResult);
                 model.addAttribute("user",user);
-                return "signup";
-                //throw new Exception("" + bindingResult.getAllErrors());
+                throw new Exception("" + bindingResult.getAllErrors());
             }
 
             user.setRole("ROLE_USER");
