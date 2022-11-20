@@ -77,7 +77,11 @@
     <!--content area-->
     <div class="content mt-5">
         <div onclick="toggleSidebar()" class="navigation"></div>
-      
+
+        <div th:if="${session.message}" class="alert p-5" th:class="${session.message.type}" role="alert">
+            <p class="text-center p-2" th:text="${session.message.content}"></p>
+            <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+        </div>
 
         <div th:replace="${content}">
         </div>
