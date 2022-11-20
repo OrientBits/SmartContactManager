@@ -13,6 +13,11 @@
 
     <div class="card m-3">
         <div class="card-body">
+
+            <div th:if="${session.message}" class="alert p-5" th:class="${session.message.type}" role="alert">
+                <p class="text-center" th:text="${session.message.content}"></p>
+            </div>
+
             <h1 class="text-center">Add Contact</h1>
 
             <div class="container-fluid mt-1">
@@ -32,7 +37,7 @@
                                     <i class="fa-solid fa-plus"></i>
                                 </div>
                                 <input type="text" id="firstName" class="form-control"
-                                       name="name" placeholder="Enter Name here">
+                                       name="name" placeholder="Enter First Name" required>
                             </div>
 
 
@@ -43,7 +48,7 @@
                                     <i class="fa-solid fa-user"></i>
                                 </div>
                                 <input type="text" id="secondName" class="form-control"
-                                       name="secondName" placeholder="Enter Nick Name here">
+                                       name="secondName" placeholder="Enter Last Name" required>
                             </div>
 
                             <!-- phone filed-->
@@ -53,7 +58,7 @@
                                     <i class="fa-solid fa-phone"></i>
                                 </div>
                                 <input type="number" id="phone" class="form-control"
-                                       name="phone" placeholder="Enter Phone no here">
+                                       name="phone" placeholder="Enter Phone No" required>
                             </div>
 
                             <!-- email filed-->
@@ -62,28 +67,27 @@
                                     <i class="fa-solid fa-envelope"></i>
                                 </div>
                                 <input type="email" id="email" class="form-control"
-                                       name="email" placeholder="Enter Email here">
+                                       name="email" placeholder="Enter Email" required>
                             </div>
 
-                            <!--world filed-->
+                            <!--work filed-->
                             <div class="input-group mb-3">
                                 <div class="input-group-text">
                                     <i class="fa-solid fa-briefcase"></i>
                                 </div>
                                 <input type="text" id="work" class="form-control"
-                                       name="word" placeholder="Enter You work here">
+                                       name="work" placeholder="Enter You Work" required>
                             </div>
 
                             <!-- contact description-->
 
                             <div class="input-group mb-3">
                                 <textarea id="description" rows="10" class="form-control"
-                                          name="description" placeholder="Enter your description"></textarea>
+                                          name="description" placeholder="Enter About You - Description"></textarea>
                             </div>
-
-                            <!-- contact image-->
+                             <!--contact image-->
                             <div class="mb-3">
-                                <input class="form-control" type="file" id="profileIMage">
+                                <input class="form-control" type="file" name="profileImage">
                             </div>
 
                             <div class="container text-center">
