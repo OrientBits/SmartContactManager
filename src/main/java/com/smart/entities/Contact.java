@@ -19,7 +19,6 @@ public class Contact {
     private String imageUrl;
     @Column(length = 5000)
     private String description;
-
     @ManyToOne
     private User user;
 
