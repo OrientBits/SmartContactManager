@@ -17,7 +17,7 @@ public class Contact {
     private String email;
     private String phone;
     private String imageUrl;
-    @Column(length = 500)
+    @Column(length = 5000)
     private String description;
 
     @ManyToOne
