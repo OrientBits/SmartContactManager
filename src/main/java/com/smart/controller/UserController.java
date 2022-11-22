@@ -1,5 +1,6 @@
 package com.smart.controller;
 
+import com.smart.dao.ContactRepository;
 import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
@@ -20,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -30,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ContactRepository contactRepository;
 
     //run for every handler
     @ModelAttribute
@@ -102,8 +107,25 @@ public class UserController {
             session.setAttribute("message", new Message("Failed to Add Contact! " + e.getMessage(), "alert-danger"));
             return "normal/add_contact_form";
         }
+    }
 
 
+    @GetMapping("/show-contacts")
+    public String showContacts(Model model){
+        model.addAttribute("title","Show User Contacts");
+
+        /*//first way to get list of contacts
+        List<Contact> contacts = user.getContacts();
+        model.addAttribute("contacts",contacts);*/
+
+        //by creating contact repository
+        List<Contact> contacts = contactRepository.findContactsByUser(user.getId());
+        model.addAttribute("contacts", contacts);
+
+        System.out.println("UserId: "+user.getId());
+        System.out.println("Contacts: "+contacts);
+
+        return "normal/show_contact";
     }
 
 
