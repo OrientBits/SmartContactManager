@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base::layout(~{::section})"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<section>
+    <div class="card m-3">
+        <div class="card-body">
+            <h1 class="text-center mt-2">Contacts Details</h1>
+
+            <div class="container text-center mt-5">
+                <img src="" th:src="@{'/img/'+${contact.imageUrl}}" class="user_profile_detail" alt="Profile">
+
+                <h3 class="mt-4"><span th:text="${contact.name}"></span> (<span class="mt-4"
+                                                                                th:text="${contact.secondName}"></span>)
+                </h3>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col"> SCM-<span th:text="${contact.id}"></span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td><span th:text="${contact.email}"></span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Phone</th>
+                        <td><span th:text="${contact.phone}"></span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Work</th>
+                        <td><span th:text="${contact.work}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="description p-2">
+                    <th:block th:utext="${contact.description}"></th:block>
+                </div>
+
+
+                <button class="btn btn-danger btn-block m-1">Delete</button>
+                <button class="btn btn-primary btn-block m-1">Update</button>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
