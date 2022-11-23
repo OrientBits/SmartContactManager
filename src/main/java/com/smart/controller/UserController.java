@@ -7,6 +7,9 @@ import com.smart.entities.User;
 import com.smart.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("user")
@@ -80,7 +84,7 @@ public class UserController {
 
             //processing file
             if (file.isEmpty()){
-                System.out.println("file is empty");
+                contact.setImageUrl("user.png");
             }else{
                 String originalFilename = file.getOriginalFilename();
                 originalFilename = originalFilename.substring(0,originalFilename.length()-4)+ userId++ + originalFilename.substring(originalFilename.length()-4);
@@ -110,8 +114,11 @@ public class UserController {
     }
 
 
-    @GetMapping("/show-contacts")
-    public String showContacts(Model model){
+
+    //showing contacts handler
+    //per page 5
+    @GetMapping("/show-contacts/{page}")
+    public String showContacts(@PathVariable("page") Integer page, Model model){
         model.addAttribute("title","Show User Contacts");
 
         /*//first way to get list of contacts
@@ -119,13 +126,27 @@ public class UserController {
         model.addAttribute("contacts",contacts);*/
 
         //by creating contact repository
-        List<Contact> contacts = contactRepository.findContactsByUser(user.getId());
+        Pageable pageRequest = PageRequest.of(page, 5);
+        Page<Contact> contacts = contactRepository.findContactsByUser(user.getId(), pageRequest);
         model.addAttribute("contacts", contacts);
-
-        System.out.println("UserId: "+user.getId());
-        System.out.println("Contacts: "+contacts);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("totalPage",contacts.getTotalPages());
 
         return "normal/show_contact";
+    }
+
+
+    //showing contacts details
+    @GetMapping("/contact-details/{contactId}")
+    public String showContactDetails(@PathVariable("contactId") Integer contactId,Model model){
+        model.addAttribute("title","Contact Details");
+
+        Optional<Contact> contactOptional = contactRepository.findById(contactId);
+        Contact contact1 = contactOptional.get();
+
+        model.addAttribute("contact",contact1);
+
+        return "normal/contact-details";
     }
 
 

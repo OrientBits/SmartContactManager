@@ -152,3 +152,18 @@ body {
 .main.active .content {
     margin-left: 1%;
 }
+
+.user_profile{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+.user_profile_detail{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
