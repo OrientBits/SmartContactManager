@@ -7,6 +7,9 @@ import com.smart.entities.User;
 import com.smart.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -110,8 +113,11 @@ public class UserController {
     }
 
 
-    @GetMapping("/show-contacts")
-    public String showContacts(Model model){
+
+    //showing contacts handler
+    //per page 5
+    @GetMapping("/show-contacts/{page}")
+    public String showContacts(@PathVariable("page") Integer page, Model model){
         model.addAttribute("title","Show User Contacts");
 
         /*//first way to get list of contacts
@@ -119,10 +125,12 @@ public class UserController {
         model.addAttribute("contacts",contacts);*/
 
         //by creating contact repository
-        List<Contact> contacts = contactRepository.findContactsByUser(user.getId());
+        Pageable pageRequest = PageRequest.of(page, 5);
+        Page<Contact> contacts = contactRepository.findContactsByUser(user.getId(), pageRequest);
         model.addAttribute("contacts", contacts);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("totalPage",contacts.getTotalPages());
 
-        System.out.println("UserId: "+user.getId());
         System.out.println("Contacts: "+contacts);
 
         return "normal/show_contact";
