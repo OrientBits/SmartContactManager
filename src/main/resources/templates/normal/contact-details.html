@@ -10,7 +10,8 @@
 <body>
 
 <section>
-    <div class="card m-3">
+    <div th:if="${contact}"  class="card m-3">
+
         <div class="card-body">
             <h1 class="text-center mt-2">Contacts Details</h1>
 
@@ -55,7 +56,15 @@
             </div>
 
         </div>
+
     </div>
+
+
+    <div th:unless="${contact}" class="card-body text-center bg-danger text-white m-3">
+        <h3>Don't have Contact or Permission</h3>
+    </div>
+
+
 </section>
 
 </body>

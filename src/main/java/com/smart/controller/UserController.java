@@ -42,29 +42,30 @@ public class UserController {
 
     //run for every handler
     @ModelAttribute
-    public void addCommonData(Model model,Principal principal){
+    public void addCommonData(Model model, Principal principal) {
         String name = principal.getName();
-        System.out.println("UserName "+name);
+        System.out.println("UserName " + name);
         //get the user by username
         user = userRepository.getUserByUserName(name);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
     }
 
     //home page
     @RequestMapping("index")
-    public String dashboard(Model model, Principal principal){
-        model.addAttribute("title","Home");
+    public String dashboard(Model model, Principal principal) {
+        model.addAttribute("title", "Home");
         System.out.println("Logged in");
-        userId = user.getId() + user.getContacts().size();;
+        userId = user.getId() + user.getContacts().size();
+        ;
         return "normal/user_dashboard";
     }
 
 
     //open add form handler
     @GetMapping("/add-contact")
-    public String openAddContactForm(Model model){
-        model.addAttribute("title","Add Contact");
-        model.addAttribute("contact",new Contact());
+    public String openAddContactForm(Model model) {
+        model.addAttribute("title", "Add Contact");
+        model.addAttribute("contact", new Contact());
 
         return "normal/add_contact_form";
     }
@@ -74,27 +75,27 @@ public class UserController {
     @PostMapping("/process-contact")
     public String processContact(@Valid @ModelAttribute Contact contact, BindingResult bindingResult,
                                  Model model, HttpSession session,
-                                 @RequestParam("profileImage") MultipartFile file){
-        try{
+                                 @RequestParam("profileImage") MultipartFile file) {
+        try {
 
-            if (bindingResult.hasErrors()){
-                System.out.println("Errors: "+ bindingResult);
+            if (bindingResult.hasErrors()) {
+                System.out.println("Errors: " + bindingResult);
                 throw new Exception("" + bindingResult.getAllErrors());
             }
 
             //processing file
-            if (file.isEmpty()){
+            if (file.isEmpty()) {
                 contact.setImageUrl("user.png");
-            }else{
+            } else {
                 String originalFilename = file.getOriginalFilename();
-                originalFilename = originalFilename.substring(0,originalFilename.length()-4)+ userId++ + originalFilename.substring(originalFilename.length()-4);
+                originalFilename = originalFilename.substring(0, originalFilename.length() - 4) + userId++ + originalFilename.substring(originalFilename.length() - 4);
 
                 contact.setImageUrl(originalFilename);
                 File saveFile = new ClassPathResource("static/img").getFile();
                 Path path = Paths.get(saveFile.getAbsoluteFile() + File.separator + originalFilename);
-                Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-                System.out.println("Path: "+path);
+                System.out.println("Path: " + path);
                 System.out.println("Saved successfully!");
 
             }
@@ -104,22 +105,21 @@ public class UserController {
             user.getContacts().add(contact);
             userRepository.save(user);
 
-            session.setAttribute("message",new Message("Successfully Added!","alert-success"));
+            session.setAttribute("message", new Message("Successfully Added!", "alert-success"));
             return "normal/add_contact_form";
-        }catch (Exception e){
-            System.out.println("Error: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
             session.setAttribute("message", new Message("Failed to Add Contact! " + e.getMessage(), "alert-danger"));
             return "normal/add_contact_form";
         }
     }
 
 
-
     //showing contacts handler
     //per page 5
     @GetMapping("/show-contacts/{page}")
-    public String showContacts(@PathVariable("page") Integer page, Model model){
-        model.addAttribute("title","Show User Contacts");
+    public String showContacts(@PathVariable("page") Integer page, Model model) {
+        model.addAttribute("title", "Show User Contacts");
 
         /*//first way to get list of contacts
         List<Contact> contacts = user.getContacts();
@@ -129,8 +129,8 @@ public class UserController {
         Pageable pageRequest = PageRequest.of(page, 5);
         Page<Contact> contacts = contactRepository.findContactsByUser(user.getId(), pageRequest);
         model.addAttribute("contacts", contacts);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("totalPage",contacts.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", contacts.getTotalPages());
 
         return "normal/show_contact";
     }
@@ -138,13 +138,19 @@ public class UserController {
 
     //showing contacts details
     @GetMapping("/contact-details/{contactId}")
-    public String showContactDetails(@PathVariable("contactId") Integer contactId,Model model){
-        model.addAttribute("title","Contact Details");
+    public String showContactDetails(@PathVariable("contactId") Integer contactId, Model model) {
+        model.addAttribute("title", "Contact Details");
 
-        Optional<Contact> contactOptional = contactRepository.findById(contactId);
-        Contact contact1 = contactOptional.get();
+        try {
+            Optional<Contact> contactOptional = contactRepository.findById(contactId);
+            Contact contact1 = contactOptional.get();
 
-        model.addAttribute("contact",contact1);
+            if (user.getId() == contact1.getUser().getId())
+                model.addAttribute("contact", contact1);
+
+        }catch (Exception e){
+            System.out.println("Exception coming...");
+        }
 
         return "normal/contact-details";
     }
