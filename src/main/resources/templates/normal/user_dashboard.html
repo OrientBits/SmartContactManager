@@ -9,18 +9,32 @@
 <body>
 
 <section>
-    <h1 class="font-weight-bold">Welcome to User Dashboard</h1>
-    <p>
-        start Collecting your contacts in very smarter way. We provide
-        very efficient and smarter way of handling contacts.
-    </p>
 
-    <h1> User Name: <span th:text="${user.name}"></span></h1>
-    <h1> User Email: <span th:text="${user.email}"></span></h1>
-    <h1> User role: <span th:text="${user.role}"></span></h1>
-    <h1> User About: <span th:text="${user.about}"></span></h1>
+    <div class="container">
 
-    <h2> <a href="" th:href="@{/logout}"> Logout</a> </h2>
+        <div class="card">
+            <div class="card-body text-center p-5">
+
+                <h1 class="font-weight-bold">Welcome to User Dashboard</h1>
+
+                <img src="" th:src="@{/img/contact_logo.png}" style="width: 200px; height: 200px" alt="Profile">
+
+            <p class="text-center mt-3 text-secondary fst-italic fs-2">
+                Start collecting your contacts in very smarter way...
+            </p>
+
+
+                <div>
+                    <a th:href="@{/user/add-contact}"  href=""> <button class="btn btn-primary mt-4">Add New Contact</button> </a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
 
 </section>
 

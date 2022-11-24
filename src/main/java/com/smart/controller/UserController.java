@@ -222,4 +222,14 @@ public class UserController {
     }
 
 
+    // profile
+    @GetMapping("/profile")
+    public String yourProfile(Model model){
+        model.addAttribute("title","Profile");
+        model.addAttribute("user",user);
+        return "normal/profile";
+    }
+
+
+
 }
