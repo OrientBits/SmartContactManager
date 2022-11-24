@@ -73,15 +73,13 @@ public class HomeController {
             user.setEnabled(true);
             user.setImageUrl("default.png");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-            System.out.println("Agreement: " + agreement);
-            System.out.println("User: " + user);
-
             User result = userRepository.save(user);
+
+
+
             System.out.println("After database: " + result);
             model.addAttribute("user", user);
 
-            model.addAttribute("user", user);
             session.setAttribute("message", new Message("Successfully Register! ", "alert-success"));
             return "signup";
 
@@ -92,6 +90,8 @@ public class HomeController {
             return "signup";
         }
     }
+
+
 
 
     // handler for custom login
