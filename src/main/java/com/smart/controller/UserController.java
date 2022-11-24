@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,7 @@ public class UserController {
 
     private User user;
     int userId;
+    public static int currentPageNo = 0;
 
     @Autowired
     private UserRepository userRepository;
@@ -59,7 +61,6 @@ public class UserController {
         ;
         return "normal/user_dashboard";
     }
-
 
     //open add form handler
     @GetMapping("/add-contact")
@@ -97,10 +98,7 @@ public class UserController {
 
                 System.out.println("Path: " + path);
                 System.out.println("Saved successfully!");
-
             }
-
-
             contact.setUser(user);
             user.getContacts().add(contact);
             userRepository.save(user);
@@ -132,6 +130,8 @@ public class UserController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPage", contacts.getTotalPages());
 
+        currentPageNo = page;
+
         return "normal/show_contact";
     }
 
@@ -144,15 +144,81 @@ public class UserController {
         try {
             Optional<Contact> contactOptional = contactRepository.findById(contactId);
             Contact contact1 = contactOptional.get();
-
             if (user.getId() == contact1.getUser().getId())
                 model.addAttribute("contact", contact1);
-
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Exception coming...");
         }
 
         return "normal/contact-details";
+    }
+
+    // deleting contacts
+    @GetMapping("contact-details/delete/{id}")
+    public String deleteContact(@PathVariable("id") Integer id, Model model) {
+        Contact contact = contactRepository.findById(id).get();
+        model.addAttribute("contact", contact);
+
+        //contact.setUser(null);
+        contactRepository.deleteContactById(contact.getId());
+        System.out.println("Contact to be deleted: " + contact);
+
+        return "redirect:/user/show-contacts/" + currentPageNo;
+    }
+
+
+    @PostMapping("/update-contact/{id}")
+    public String updateContactForm(@PathVariable("id") Integer id, Model model){
+
+        Contact contact = contactRepository.findById(id).get();
+        model.addAttribute("contact",contact);
+
+        return "normal/update_contact_form";
+    }
+
+
+    //update contact
+
+    @PostMapping("/process-contact/{id}")
+    public String updateContact(@Valid @ModelAttribute Contact contact,@PathVariable("id") Integer id
+    ,@RequestParam("profileImage") MultipartFile file,HttpSession session){
+
+        try{
+            contact.setId(id);
+            contact.setUser(user);
+
+            //old contact details;
+            Contact oldContact = contactRepository.findById(id).get();
+
+            if (file.isEmpty()) {
+                contact.setImageUrl(oldContact.getImageUrl());
+            } else {
+
+                File deleteFile = new ClassPathResource("static/img").getFile();
+                File file1 = new File(deleteFile,oldContact.getImageUrl());
+                file1.delete();
+
+
+                //update new photo
+                String originalFilename = file.getOriginalFilename();
+                originalFilename = originalFilename.substring(0, originalFilename.length() - 4) + userId++ + originalFilename.substring(originalFilename.length() - 4);
+                contact.setImageUrl(originalFilename);
+
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsoluteFile() + File.separator + originalFilename);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+
+            contactRepository.save(contact);
+
+            session.setAttribute("message",new Message("Successfully Updated","success"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "redirect:/user/contact-details/"+id;
     }
 
 
