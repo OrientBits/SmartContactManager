@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +36,9 @@ public class UserController {
     private User user;
     int userId;
     public static int currentPageNo = 0;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -229,6 +233,52 @@ public class UserController {
         model.addAttribute("user",user);
         return "normal/profile";
     }
+
+    //setting
+
+    @GetMapping("/updateSetting")
+    public String setting(Model model){
+        model.addAttribute("title","Setting");
+        model.addAttribute("user",user);
+        return "normal/setting";
+    }
+
+
+    //update user
+    @PostMapping("/do_update")
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
+                             Model model, HttpSession session){
+        model.addAttribute("title","Setting");
+
+        try {
+            if (bindingResult.hasErrors()) {
+                System.out.println("Errors: "+ bindingResult);
+                model.addAttribute("user",user);
+                throw new Exception("" + bindingResult.getAllErrors());
+            }
+
+
+            this.user.setPassword(passwordEncoder.encode(user.getPassword()));
+            this.user.setName(user.getName());
+            this.user.setAbout(user.getAbout());
+            User result = userRepository.save(user);
+
+            System.out.println("Updated User: "+result);
+            model.addAttribute("user",this.user);
+
+
+            session.setAttribute("message", new Message("Successfully Updated! ", "alert-success"));
+        }catch (Exception e){
+            e.printStackTrace();
+            session.setAttribute("message", new Message("Failed to Update! "+e.getMessage(), "alert-success"));
+        }
+
+
+        return "normal/setting";
+    }
+
+
+
 
 
 
